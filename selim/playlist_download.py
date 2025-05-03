@@ -35,8 +35,14 @@ playlists = [
 
 ]
 
+playlists = [["https://www.youtube.com/watch?v=SsYXnH9lzCY&ab_channel=7clouds", "https://www.youtube.com/watch?v=X-yIEMduRXk&ab_channel=AdeleVEVO", "https://www.youtube.com/watch?v=T1tl66trXTQ&ab_channel=Adele-Topic",
+              "https://www.youtube.com/watch?v=DylyIX9gCtA&ab_channel=Coldplay", "https://www.youtube.com/watch?v=NFk1WoXmsM8&ab_channel=DopeNetwork", "https://www.youtube.com/watch?v=t99KH0TR-J4&ab_channel=QueenOfficial",
+              "https://www.youtube.com/watch?v=SEhSs5Uemsk&ab_channel=Wegz%D9%88%D9%8A%D8%AC%D8%B2", "https://www.youtube.com/watch?v=_4zeNNSManE&ab_channel=CairokeeOfficial"]]
+
+playlists = [["https://www.youtube.com/watch?v=Sua3g0DBwv8&ab_channel=Wegz%D9%88%D9%8A%D8%AC%D8%B2"]]
+
 # Output folder
-output_folder = "/Users/Selim/Documents/UNI_STUTTGART/Semester 4/Deep Learning Lab/Project/data"
+output_folder = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/data_extra2"
 
 # Download first 10 songs from each playlist
 os.makedirs(output_folder, exist_ok=True)

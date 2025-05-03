@@ -2,7 +2,7 @@ import os
 import subprocess
 
 # Set your input folder path
-input_folder = r"/Users/Selim/Documents/UNI_STUTTGART/Semester 4/Deep Learning Lab/Project/data"  # <-- Change this to your folder path
+input_folder = r"/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/data_extra2"  # <-- Change this to your folder path
 
 # Set of valid audio file extensions
 valid_audio_extensions = {'.mp3', '.wav', '.flac', '.ogg', '.m4a'}
@@ -16,7 +16,7 @@ for filename in os.listdir(input_folder):
         print(f"Processing: {filename}")
 
         # Run Demucs on the file
-        subprocess.run(["demucs", "--two-stems", "vocals", filepath])
+        subprocess.run(["demucs", "--device", "cuda", "--two-stems", "vocals", filepath])
 
     else:
         print(f"Skipping non-audio file: {filename}")
