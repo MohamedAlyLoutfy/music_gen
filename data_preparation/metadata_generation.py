@@ -17,10 +17,10 @@ if not client.api_key:
     raise ValueError("OpenAI API key not found. Make sure it's set in the .env file.")
 
 def clean_json_response(content):
-    # Remove Markdown code block markers and trim whitespace
-    match = re.search(r"{.*}", content, re.DOTALL)
+    """Extract and return first JSON object from a string (removes markdown code blocks)"""
+    match = re.search(r"{.*?}", content, re.DOTALL)
     if match:
-        return match.group(0)
+        return match.group(0).strip()
     return content.strip()
 
 def query_song_metadata(song_name):
@@ -38,59 +38,70 @@ Only respond with the JSON.
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o",  # or "gpt-4o" if you have quota
+            model="gpt-3.5-turbo",  # or "gpt-4o" if available
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )
 
-        content = response.choices[0].message.content.strip()
-        cleaned_content = clean_json_response(content)
-        print(f"content: {cleaned_content}")
-        # Try to load the JSON response
-        metadata = json.loads(cleaned_content)
-        return metadata
+        content = response.choices[0].message.content
+        cleaned = clean_json_response(content)
+        print(f"content: {cleaned}")
+        return json.loads(cleaned)
 
-    except json.JSONDecodeError as je:
-        print(f"JSON error for '{song_name}': {je}")
     except Exception as e:
-        print(f"Error for '{song_name}': {e}")
-
-    return {
-        "song_name": song_name,
-        "mood": "error",
-        "instruments": "error",
-        "genre": "error"
-    }
+        raise RuntimeError(f"Error querying metadata for '{song_name}': {e}")
 
 def update_csv_with_metadata(input_csv_path, output_csv_path):
-    updated_rows = []
+    processed_songs = set()
 
-    with open(input_csv_path, mode='r', newline='', encoding='utf-8') as infile:
+    # Check if output file exists and load already processed song names
+    if os.path.exists(output_csv_path):
+        with open(output_csv_path, mode='r', encoding='utf-8') as outfile:
+            reader = csv.reader(outfile)
+            headers = next(reader)
+            for row in reader:
+                if row and row[0]:
+                    processed_songs.add(row[0].strip())
+
+    # Open input and output CSV
+    with open(input_csv_path, mode='r', encoding='utf-8') as infile, \
+         open(output_csv_path, mode='a', newline='', encoding='utf-8') as outfile:
+
         reader = csv.reader(infile)
-        headers = next(reader)
+        input_headers = next(reader)
+        full_headers = input_headers + ['mood', 'instruments', 'genre']
 
-        if 'mood' not in headers:
-            headers += ['mood', 'instruments', 'genre']
-        updated_rows.append(headers)
+        writer = csv.writer(outfile)
+
+        # Write headers only if output is empty
+        if os.stat(output_csv_path).st_size == 0:
+            writer.writerow(full_headers)
 
         for row in reader:
-            # Extract actual song name after first dash
-            parts = row[0].split('-', 1)
-            song_name = parts[1].strip() if len(parts) > 1 else row[0].strip()
+            raw_name = row[0].strip()
+            if raw_name in processed_songs:
+                print(f"✅ Skipping already processed: {raw_name}")
+                continue
 
-            print(f"Processing: {song_name}")
-            metadata = query_song_metadata(song_name)
+            # Extract song name after the first dash
+            parts = raw_name.split('-', 1)
+            song_name = parts[1].strip() if len(parts) > 1 else raw_name
 
-            row += [metadata['mood'], metadata['instruments'], metadata['genre']]
-            updated_rows.append(row)
+            print(f"🔍 Processing: {song_name}")
 
-            time.sleep(3)  # Respect rate limits
+            try:
+                metadata = query_song_metadata(song_name)
+                row += [metadata["mood"], metadata["instruments"], metadata["genre"]]
+                writer.writerow(row)
+                outfile.flush()
+                time.sleep(1.5)  # Respect API rate limits
+            except Exception as e:
+                print(f"❌ {e}")
+                print("🛑 Stopping script due to error.")
+                break
 
-    with open(output_csv_path, mode='w', newline='', encoding='utf-8') as outfile:
-        writer = csv.writer(outfile)
-        writer.writerows(updated_rows)
+    print(f"\n✅ Done. Results written to: {output_csv_path}")
 
-    print(f"\n✅ Done! Updated CSV saved to: {output_csv_path}")
 # Example usage
 if __name__ == "__main__":
     update_csv_with_metadata('/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_201.csv', '/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_filled.csv')
