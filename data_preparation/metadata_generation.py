@@ -38,7 +38,7 @@ Only respond with the JSON.
 
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # or "gpt-4o" if available
+            model="gpt-4o",  # or "gpt-4o" if available
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )
@@ -54,16 +54,18 @@ Only respond with the JSON.
 def update_csv_with_metadata(input_csv_path, output_csv_path):
     processed_songs = set()
 
-    # Check if output file exists and load already processed song names
+    # Read output file to get songs that already have genre filled
     if os.path.exists(output_csv_path):
         with open(output_csv_path, mode='r', encoding='utf-8') as outfile:
             reader = csv.reader(outfile)
             headers = next(reader)
+            genre_index = headers.index("genre") if "genre" in headers else -1
+
             for row in reader:
-                if row and row[0]:
+                if row and genre_index >= 0 and row[0] and row[genre_index].strip():
                     processed_songs.add(row[0].strip())
 
-    # Open input and output CSV
+    # Open files
     with open(input_csv_path, mode='r', encoding='utf-8') as infile, \
          open(output_csv_path, mode='a', newline='', encoding='utf-8') as outfile:
 
@@ -73,14 +75,14 @@ def update_csv_with_metadata(input_csv_path, output_csv_path):
 
         writer = csv.writer(outfile)
 
-        # Write headers only if output is empty
+        # Write headers if file is empty
         if os.stat(output_csv_path).st_size == 0:
             writer.writerow(full_headers)
 
         for row in reader:
             raw_name = row[0].strip()
             if raw_name in processed_songs:
-                print(f"✅ Skipping already processed: {raw_name}")
+                print(f"✅ Skipping (already has genre): {raw_name}")
                 continue
 
             # Extract song name after the first dash
@@ -94,7 +96,7 @@ def update_csv_with_metadata(input_csv_path, output_csv_path):
                 row += [metadata["mood"], metadata["instruments"], metadata["genre"]]
                 writer.writerow(row)
                 outfile.flush()
-                time.sleep(1.5)  # Respect API rate limits
+                time.sleep(1.5)
             except Exception as e:
                 print(f"❌ {e}")
                 print("🛑 Stopping script due to error.")
