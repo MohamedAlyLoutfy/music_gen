@@ -4,313 +4,363 @@ import re
 
 # Replace this with the full text content you posted
 text = """
-Processing: ABBA - Dancing Queen (Official Music Video)
-content: {
-  "song_name": "ABBA - Dancing Queen (Official Music Video)",
-  "mood": "joyful, nostalgic, energetic",
-  "instruments": "piano, guitar, bass, drums, strings, synthesizer, vocals",
-  "genre": "pop, disco"
-}
-Processing: ABBA - I Have A Dream (from ABBA In Concert)
-content: {
-  "song_name": "ABBA - I Have A Dream (from ABBA In Concert)",
-  "mood": "uplifting, inspirational",
-  "instruments": "vocals, piano, guitar, strings, flute",
-  "genre": "pop"
-}
-Processing: ABBA - Knowing Me, Knowing You (Official Music Video)
-content: {
-  "song_name": "ABBA - Knowing Me, Knowing You (Official Music Video)",
-  "mood": "melancholic, reflective",
-  "instruments": "vocals, electric guitar, bass guitar, drums, synthesizer",
-  "genre": "pop, disco"
-}
-Processing: ABBA - Lay All Your Love On Me (Official Lyric Video)
-content: {
-  "song_name": "ABBA - Lay All Your Love On Me (Official Lyric Video)",
-  "mood": "passionate and dramatic",
-  "instruments": "synthesizer, drum machine, bass guitar, vocals",
-  "genre": "disco, pop"
-}
-Processing: ABBA - Mamma Mia (Official Music Video)
-content: {
-  "song_name": "ABBA - Mamma Mia (Official Music Video)",
-  "mood": "upbeat, nostalgic",
-  "instruments": "piano, guitar, bass, drums, synthesizer",
-  "genre": "pop, disco"
-}
-Processing: ABBA - Money, Money, Money (Official Music Video)
-content: {
-  "song_name": "ABBA - Money, Money, Money (Official Music Video)",
-  "mood": "dramatic, theatrical, ambitious",
-  "instruments": "piano, strings, bass guitar, drums, vocals",
-  "genre": "pop, disco"
-}
-Processing: ABBA - SOS (Official Music Video)
-content: {
-  "song_name": "ABBA - SOS (Official Music Video)",
-  "mood": "melancholic yet uplifting",
-  "instruments": "piano, guitar, bass, drums, synthesizer, vocals",
-  "genre": "pop, pop rock"
-}
-Processing: ABBA - Super Trouper
-content: {
-  "song_name": "ABBA - Super Trouper",
-  "mood": "uplifting, nostalgic",
-  "instruments": "synthesizers, guitar, bass, drums, vocals",
-  "genre": "pop, disco"
-}
-Processing: ABBA - Take A Chance On Me (Official Music Video)
-content: {
-  "song_name": "ABBA - Take A Chance On Me (Official Music Video)",
-  "mood": "upbeat, hopeful",
-  "instruments": "vocals, synthesizers, piano, bass guitar, drums",
-  "genre": "Pop, Disco"
-}
-Processing: ABBA - The Winner Takes It All
-content: {
-  "song_name": "ABBA - The Winner Takes It All",
-  "mood": "melancholic, reflective",
-  "instruments": "piano, vocals, synthesizer, bass guitar, drums",
-  "genre": "pop"
-}
-Processing: Adele - Easy On Me (Official Lyric Video)
-content: {
-  "song_name": "Adele - Easy On Me (Official Lyric Video)",
-  "mood": "melancholic, reflective",
-  "instruments": "piano, subtle orchestral strings",
-  "genre": "pop, soul"
-}
-Processing: Adele - Hello
-content: {
-  "song_name": "Adele - Hello",
-  "mood": "melancholic, reflective",
-  "instruments": "piano, drums, strings, vocals",
-  "genre": "soul, pop"
-}
-Processing: Adele - Hometown Glory (Official Music Video)
-content: {
-  "song_name": "Adele - Hometown Glory (Official Music Video)",
-  "mood": "nostalgic, emotional",
-  "instruments": "piano, strings, vocals",
-  "genre": "soul, pop"
-}
-Processing: Adele - Love In The Dark
-content: {
-  "song_name": "Adele - Love In The Dark",
-  "mood": "melancholic, heartfelt",
-  "instruments": "piano, strings",
-  "genre": "soul, pop"
-}
-Processing: Adele - Rolling in the Deep (Official Music Video)
-content: {
-  "song_name": "Adele - Rolling in the Deep (Official Music Video)",
-  "mood": "empowering, intense",
-  "instruments": "vocals, piano, drums, guitar, bass",
-  "genre": "soul, pop, blues"
-}
-Processing: Adele - Send My Love (To Your New Lover)
-content: {
-  "song_name": "Adele - Send My Love (To Your New Lover)",
-  "mood": "empowered, reflective",
-  "instruments": "acoustic guitar, percussion, vocals",
-  "genre": "pop"
-}
-Processing: Adele - Set Fire to the Rain
-content: {
-  "song_name": "Adele - Set Fire to the Rain",
-  "mood": "emotional, powerful, dramatic",
-  "instruments": "piano, drums, strings, vocals",
-  "genre": "pop, soul"
-}
-Processing: Adele - Skyfall (Official Lyric Video)
-content: {
-  "song_name": "Adele - Skyfall (Official Lyric Video)",
-  "mood": "dramatic, intense, cinematic",
-  "instruments": "piano, strings, brass, percussion",
-  "genre": "pop, orchestral, soundtrack"
-}
-Processing: Adele - Someone Like You (Official Music Video)
-content: {
-  "song_name": "Adele - Someone Like You (Official Music Video)",
-  "mood": "melancholic, heartfelt, reflective",
-  "instruments": "piano, vocals",
-  "genre": "soul, pop"
-}
-Processing: Adele - When We Were Young
-content: {
-  "song_name": "Adele - When We Were Young",
-  "mood": "nostalgic, emotional",
-  "instruments": "piano, strings, drums, vocals",
-  "genre": "soul, pop"
-}
-Processing: Avicii - Heaven (Tribute Video)
-content: {
-  "song_name": "Avicii - Heaven (Tribute Video)",
-  "mood": "uplifting, emotional",
-  "instruments": "synthesizers, piano, electronic drums, guitars",
-  "genre": "progressive house, electronic"
-}
-Processing: Avicii - Hey Brother
-content: {
-  "song_name": "Avicii - Hey Brother",
-  "mood": "uplifting, emotional",
-  "instruments": "acoustic guitar, piano, brass, electronic synths, percussion",
-  "genre": "country-inspired electronic dance music (EDM)"
-}
-Processing: Avicii - Levels
-content: {
-  "song_name": "Avicii - Levels",
-  "mood": "uplifting, energetic",
-  "instruments": "synthesizers, piano, electronic drums, bassline",
-  "genre": "progressive house"
-}
-Processing: Avicii - Swedish House Mafia ft. John Martin - Don't You Worry Child (Official Video)
-content: {
-  "song_name": "Avicii - Swedish House Mafia ft. John Martin - Don't You Worry Child (Official Video)",
-  "mood": "uplifting",
-  "instruments": "synthesizers, piano, drums, vocals",
-  "genre": "progressive house"
-}
-Processing: Avicii - The Days (Lyric Video)
-content: {
-  "song_name": "Avicii - The Days (Lyric Video)",
-  "mood": "uplifting, nostalgic",
-  "instruments": "guitar, piano, synthesizers, drums",
-  "genre": "progressive house, pop"
-}
-Processing: Avicii - Waiting For Love
-content: {
-  "song_name": "Avicii - Waiting For Love",
-  "mood": "uplifting, energetic",
-  "instruments": "synthesizers, piano, bass, drums",
-  "genre": "progressive house, electronic dance music"
-}
-Processing: Avicii - Wake Me Up (Lyrics)
-content: {
-  "song_name": "Avicii - Wake Me Up (Lyrics)",
-  "mood": "uplifting, reflective",
-  "instruments": "acoustic guitar, synthesizers, drum machine",
-  "genre": "electronic dance music (EDM), folktronica"
-}
-Processing: Avicii - Without You “Audio” ft. Sandro Cavazza
-content: {
-  "song_name": "Avicii - Without You “Audio” ft. Sandro Cavazza",
-  "mood": "uplifting, empowering",
-  "instruments": "synthesizers, piano, electronic drums, vocals",
-  "genre": "Progressive House, EDM"
-}
-Processing: Avicii - アヴィーチで有名な曲　6選　メドレー1
-content: {
-  "song_name": "Avicii - アヴィーチで有名な曲　6選　メドレー1",
-  "mood": "uplifting, energetic",
-  "instruments": "synthesizers, piano, electronic drums, vocal samples",
-  "genre": "electronic dance music (EDM), progressive house"
-}
-Processing: Avicii vs Nicky Romero - I Could Be The One (Nicktim)
-content: {
-  "song_name": "Avicii vs Nicky Romero - I Could Be The One (Nicktim)",
-  "mood": "uplifting, energetic",
-  "instruments": "synthesizers, drum machine, piano",
-  "genre": "progressive house"
-}
-Processing: Billie Eilish - BIRDS OF A FEATHER
-content: {
-  "song_name": "Billie Eilish - BIRDS OF A FEATHER",
-  "mood": "melancholic",
-  "instruments": "piano, strings, vocals",
-  "genre": "indie pop"
-}
-Processing: Billie Eilish - Bellyache (Official Music Video)
-content: {
-  "song_name": "Billie Eilish - Bellyache (Official Music Video)",
-  "mood": "haunting, introspective, melancholic",
-  "instruments": "acoustic guitar, synthesizers, bass, subtle percussion",
-  "genre": "indie pop, electronic"
-}
-Processing: Billie Eilish - CHIHIRO (Official Music Video)
 content: {
   "song_name": "Billie Eilish - CHIHIRO (Official Music Video)",
-  "mood": "",
-  "instruments": "",
-  "genre": ""
+  "Mood": "Mysterious, Dreamy",
+  "Instruments": "Synthesizers, Piano, Electronic Beats",
+  "Genre": "Alternative Pop, Experimental"
 }
-Processing: Billie Eilish - Happier Than Ever (Official Music Video)
-content: {
-  "song_name": "Billie Eilish - Happier Than Ever (Official Music Video)",
-  "mood": "emotional, cathartic",
-  "instruments": "guitar, drums, synthesizer, vocals",
-  "genre": "pop, alternative/indie"
-}
-Processing: Billie Eilish - LUNCH (Official Music Video)
-content: {
-  "song_name": "Billie Eilish - LUNCH (Official Music Video)",
-  "mood": "unknown",
-  "instruments": "unknown",
-  "genre": "unknown"
-}
-Processing: Billie Eilish - L’AMOUR DE MA VIE (Official Lyric Video)
+✅ Skipping (already has genre): 234 - Billie Eilish - Happier Than Ever (Official Music Video)
+✅ Skipping (already has genre): 235 - Billie Eilish - LUNCH (Official Music Video)
+🔍 Processing: Billie Eilish - L’AMOUR DE MA VIE (Official Lyric Video)
 content: {
   "song_name": "Billie Eilish - L’AMOUR DE MA VIE (Official Lyric Video)",
-  "mood": "",
-  "instruments": "",
-  "genre": ""
+  "Mood": "Melancholic",
+  "Instruments": "Synth, Piano, Soft Percussion",
+  "Genre": "Indie Pop"
 }
-Processing: Billie Eilish - Ocean Eyes (Official Music Video)
-content: {
-  "song_name": "Billie Eilish - Ocean Eyes (Official Music Video)",
-  "mood": "dreamy, melancholic",
-  "instruments": "vocals, synthesizer, percussion",
-  "genre": "indie pop"
-}
-Processing: Billie Eilish - THE GREATEST (Official Lyric Video)
+✅ Skipping (already has genre): 237 - Billie Eilish - Ocean Eyes (Official Music Video)
+🔍 Processing: Billie Eilish - THE GREATEST (Official Lyric Video)
 content: {
   "song_name": "Billie Eilish - THE GREATEST (Official Lyric Video)",
-  "mood": "",
-  "instruments": "",
-  "genre": ""
+  "Mood": "Melancholic, Reflective",
+  "Instruments": "Synthesizers, Percussion, Piano",
+  "Genre": "Alternative/Indie Pop"
 }
-Processing: Billie Eilish - WILDFLOWER
+✅ Skipping (already has genre): 239 - Billie Eilish - WILDFLOWER
+✅ Skipping (already has genre): 240 - Billie Eilish - everything i wanted (Official Music Video)
+✅ Skipping (already has genre): 241 - Cairokee - Ana Negm  كايروكي - أنا نجم
+✅ Skipping (already has genre): 242 - Cairokee - Basrah w Atoh كايروكي - بسرح واتوه
+✅ Skipping (already has genre): 243 - Cairokee - Dinosaur (Official Music Video) ⧸ كايروكي - الديناصور
+✅ Skipping (already has genre): 244 - Cairokee - James Dean (Official Music Video) كايروكي - جيمس دين
+🔍 Processing: Cairokee - Kol Haga Bet'ady Studio Session كل حاجة بتعدي - كايروكي من الاستوديو
 content: {
-  "song_name": "Billie Eilish - WILDFLOWER",
-  "mood": "unavailable",
-  "instruments": "unavailable",
-  "genre": "unavailable"
+  "song_name": "Cairokee - Kol Haga Bet'ady Studio Session كل حاجة بتعدي - كايروكي من الاستوديو",
+  "Mood": "Reflective, Uplifting",
+  "Instruments": "Acoustic Guitar, Piano, Drums, Vocals",
+  "Genre": "Alternative Rock, Acoustic"
 }
-Processing: Billie Eilish - everything i wanted (Official Music Video)
+🔍 Processing: Cairokee - Layla Studio Session ليلى - كايروكي من الاستوديو
 content: {
-  "song_name": "Billie Eilish - everything i wanted (Official Music Video)",
-  "mood": "melancholic, introspective",
-  "instruments": "piano, synthesizers, electronic beats",
-  "genre": "electropop, alternative pop"
+  "song_name": "Cairokee - Layla Studio Session ليلى - كايروكي من الاستوديو",
+  "Mood": "Melancholic and introspective",
+  "Instruments": "Acoustic guitar, piano, percussion, vocals",
+  "Genre": "Alternative rock, acoustic"
 }
-Processing: Cairokee - Ana Negm  كايروكي - أنا نجم
+🔍 Processing: Cairokee - Roma كايروكي - روما
 content: {
-  "song_name": "Cairokee - Ana Negm  كايروكي - أنا نجم",
-  "mood": "empowering",
-  "instruments": "electric guitar, drums, bass, keyboard",
-  "genre": "rock"
+  "song_name": "Cairokee - Roma كايروكي - روما",
+  "Mood": "Melancholic and introspective",
+  "Instruments": "Electric guitar, drums, bass, synthesizers",
+  "Genre": "Alternative rock"
 }
-Processing: Cairokee - Basrah w Atoh كايروكي - بسرح واتوه
+🔍 Processing: Cairokee - Samurai كايروكي - ساموراي
 content: {
-  "song_name": "Cairokee - Basrah w Atoh كايروكي - بسرح واتوه",
-  "mood": "introspective",
-  "instruments": "electric guitar, drums, bass guitar, synthesizer",
-  "genre": "alternative rock"
+  "song_name": "Cairokee - Samurai كايروكي - ساموراي",
+  "Mood": "Energetic and rebellious",
+  "Instruments": "Electric guitar, drums, bass, synthesizers",
+  "Genre": "Alternative rock with Middle Eastern influences"
 }
-Processing: Cairokee - Dinosaur (Official Music Video) ⧸ كايروكي - الديناصور
+🔍 Processing: Cairokee - علي باب السيما - من مسلسل ريفو
 content: {
-  "song_name": "Cairokee - Dinosaur (Official Music Video) ⧸ كايروكي - الديناصور",
-  "mood": "rebellious, energetic",
-  "instruments": "electric guitar, drums, bass, synthesizer, vocals",
-  "genre": "rock, alternative"
+  "song_name": "Cairokee - علي باب السيما - من مسلسل ريفو",
+  "Mood": "Nostalgic, Reflective",
+  "Instruments": "Electric Guitar, Drums, Bass, Keyboard",
+  "Genre": "Alternative Rock, Indie"
 }
-Processing: Cairokee - James Dean (Official Music Video) كايروكي - جيمس دين
+🔍 Processing: Cairokee Ft. @saramoullablad5231  - Nefsy Ahbek  كايروكي مع سارة مول البلاد - نفسي احبك
 content: {
-  "song_name": "Cairokee - James Dean (Official Music Video) كايروكي - جيمس دين",
-  "mood": "rebellious",
-  "instruments": "electric guitar, drums, bass, synthesizer, vocals",
-  "genre": "alternative rock"
+  "song_name": "Cairokee Ft. @saramoullablad5231  - Nefsy Ahbek  كايروكي مع سارة مول البلاد - نفسي احبك",
+  "Mood": "Emotional",
+  "Instruments": "Acoustic guitar, Piano, Percussion",
+  "Genre": "Arabic Rock"
+}
+🔍 Processing: Coldplay & The Chainsmokers  - Something Just Like This (Lyric)
+content: {
+  "song_name": "Coldplay & The Chainsmokers  - Something Just Like This (Lyric)",
+  "Mood": "uplifting, nostalgic, romantic",
+  "Instruments": "synthesizers, drum machine, piano, guitar, vocals",
+  "Genre": "electropop"
+}
+🔍 Processing: Coldplay - A Sky Full Of Stars (Official Video)
+content: {
+  "song_name": "Coldplay - A Sky Full Of Stars (Official Video)",
+  "Mood": "uplifting, euphoric",
+  "Instruments": "piano, acoustic guitar, electronic beats, synthesizers",
+  "Genre": "progressive house, pop-rock"
+}
+🔍 Processing: Coldplay - Adventure Of A Lifetime (Official Video)
+content: {
+  "song_name": "Coldplay - Adventure Of A Lifetime (Official Video)",
+  "Mood": "uplifting, energetic",
+  "Instruments": "guitar, bass, drums, synthesizers",
+  "Genre": "Alternative rock, pop rock"
+}
+🔍 Processing: Coldplay - Hymn For The Weekend (Official Video)
+content: {
+  "song_name": "Coldplay - Hymn For The Weekend (Official Video)",
+  "Mood": "uplifting, celebratory",
+  "Instruments": "piano, guitar, percussion, brass, vocals",
+  "Genre": "Pop rock, alternative rock"
+}
+🔍 Processing: Coldplay - Paradise (Official Video)
+content: {
+  "song_name": "Coldplay - Paradise (Official Video)",
+  "Mood": "Uplifting, Emotional",
+  "Instruments": "Piano, Strings, Synthesizers, Drums, Electric Guitar",
+  "Genre": "Alternative Rock, Pop Rock"
+}
+🔍 Processing: Coldplay - The Scientist (Official 4K Video)
+content: {
+  "song_name": "Coldplay - The Scientist (Official 4K Video)",
+  "Mood": "Melancholic, Reflective",
+  "Instruments": "Piano, Guitar, Drums, Bass",
+  "Genre": "Alternative Rock"
+}
+🔍 Processing: Coldplay - Viva La Vida (Official Video)
+content: {
+  "song_name": "Coldplay - Viva La Vida (Official Video)",
+  "Mood": "Majestic, Uplifting, Reflective",
+  "Instruments": "Strings, Percussion, Synthesizers, Piano",
+  "Genre": "Alternative Rock, Baroque Pop"
+}
+🔍 Processing: Coldplay - WE PRAY (TINI Version) (Official)
+content: {
+  "song_name": "Coldplay - WE PRAY (TINI Version) (Official)",
+  "Mood": "",
+  "Instruments": "",
+  "Genre": ""
+}
+🔍 Processing: Coldplay - Yellow (Official Video)
+content: {
+  "song_name": "Coldplay - Yellow (Official Video)",
+  "Mood": "Melancholic, Romantic, Uplifting",
+  "Instruments": "Electric guitar, Acoustic guitar, Bass guitar, Drums, Vocals",
+  "Genre": "Alternative Rock, Post-Britpop"
+}
+🔍 Processing: Coldplay - feelslikeimfallinginlove (Official Lyric Visualiser)
+content: {
+  "song_name": "Coldplay - feelslikeimfallinginlove (Official Lyric Visualiser)",
+  "Mood": "Romantic, Dreamy",
+  "Instruments": "Synthesizers, Drums, Guitar",
+  "Genre": "Alternative Pop, Synth-pop"
+}
+🔍 Processing: Ed Sheeran - 2step (feat. Lil Baby) - [Official Video]
+content: {
+  "song_name": "Ed Sheeran - 2step (feat. Lil Baby) - [Official Video]",
+  "Mood": "Energetic",
+  "Instruments": "Guitar, Synth, Drums",
+  "Genre": "Pop, Hip-Hop"
+}
+🔍 Processing: Ed Sheeran - Azizam (Official Music Video)
+content: {
+  "song_name": "Ed Sheeran - Azizam (Official Music Video)",
+  "Mood": "",
+  "Instruments": "",
+  "Genre": ""
+}
+🔍 Processing: Ed Sheeran - Bad Habits [Official Video]
+content: {
+  "song_name": "Ed Sheeran - Bad Habits [Official Video]",
+  "Mood": "Energetic, Dark, Danceable",
+  "Instruments": "Synthesizers, Drum Machine, Electric Guitar, Bass",
+  "Genre": "Pop, Dance-Pop, Synth-Pop"
+}
+🔍 Processing: Ed Sheeran - Curtains [Official Video]
+content: {
+  "song_name": "Ed Sheeran - Curtains [Official Video]",
+  "Mood": "Reflective, Emotional",
+  "Instruments": "Acoustic Guitar, Piano, Drums, Strings",
+  "Genre": "Pop"
+}
+🔍 Processing: Ed Sheeran - Eyes Closed [Official Video]
+content: {
+  "song_name": "Ed Sheeran - Eyes Closed [Official Video]",
+  "Mood": "Melancholy, Reflective",
+  "Instruments": "Acoustic guitar, Piano, Percussion, Strings",
+  "Genre": "Pop"
+}
+🔍 Processing: Ed Sheeran - Shape of You (Official Music Video)
+content: {
+  "song_name": "Ed Sheeran - Shape of You (Official Music Video)",
+  "Mood": "Playful, Romantic, Energetic",
+  "Instruments": "Acoustic Guitar, Percussion, Synthesizers, Marimba-like Tones",
+  "Genre": "Pop"
+}
+🔍 Processing: Ed Sheeran - Shivers [Official Video]
+content: {
+  "song_name": "Ed Sheeran - Shivers [Official Video]",
+  "Mood": "Upbeat, Romantic, Energetic",
+  "Instruments": "Guitar, Synthesizer, Drums, Bass",
+  "Genre": "Pop"
+}
+🔍 Processing: Ed Sheeran - Thinking Out Loud (Official Music Video)
+content: {
+  "song_name": "Ed Sheeran - Thinking Out Loud (Official Music Video)",
+  "Mood": "Romantic",
+  "Instruments": "Guitar, Piano, Strings",
+  "Genre": "Pop, Soul"
+}
+🔍 Processing: Ed Sheeran - Under the Tree (from “That Christmas”)
+content: {
+  "song_name": "Ed Sheeran - Under the Tree (from “That Christmas”)",
+  "Mood": "Festive, Romantic",
+  "Instruments": "Acoustic Guitar, Piano, Strings, Sleigh Bells",
+  "Genre": "Pop, Christmas"
+}
+🔍 Processing: Ed Sheeran, Pokémon - Celestial [Official Video]
+content: {
+  "song_name": "Ed Sheeran, Pokémon - Celestial [Official Video]",
+  "Mood": "uplifting",
+  "Instruments": "acoustic guitar, piano, electronic beats, vocals",
+  "Genre": "pop"
+}
+🔍 Processing: Lady Gaga & Bradley Cooper - Shallow (A Star is Born)
+content: {
+  "song_name": "Lady Gaga & Bradley Cooper - Shallow (A Star is Born)",
+  "Mood": "Emotional, Introspective, Powerful",
+  "Instruments": "Acoustic Guitar, Piano, Vocals",
+  "Genre": "Pop, Country, Acoustic"
+}
+🔍 Processing: Lady Gaga - Abracadabra (Official Music Video)
+content: {
+  "song_name": "Lady Gaga - Abracadabra (Official Music Video)",
+  "Mood": "N/A",
+  "Instruments": "N/A",
+  "Genre": "N/A"
+}
+🔍 Processing: Lady Gaga - Alejandro (Official Music Video)
+content: {
+  "song_name": "Lady Gaga - Alejandro (Official Music Video)",
+  "Mood": "Melancholic, Dramatic",
+  "Instruments": "Synthesizers, Electronic Beats, Strings, Percussion",
+  "Genre": "Electropop, Synthpop"
+}
+🔍 Processing: Lady Gaga - Always Remember Us This Way (Lyrics)
+content: {
+  "song_name": "Lady Gaga - Always Remember Us This Way (Lyrics)",
+  "Mood": "Emotional, Romantic, Nostalgic",
+  "Instruments": "Piano, Acoustic Guitar, Vocals",
+  "Genre": "Pop, Ballad"
+}
+🔍 Processing: Lady Gaga - Bad Romance (Official Music Video)
+content: {
+  "song_name": "Lady Gaga - Bad Romance (Official Music Video)",
+  "Mood": "Dark, Dramatic, Empowering",
+  "Instruments": "Synthesizers, Drum Machines, Electronic Beats, Vocals",
+  "Genre": "Electropop, Dance-Pop"
+}
+🔍 Processing: Lady Gaga - Bloody Mary (Official Audio)
+content: {
+  "song_name": "Lady Gaga - Bloody Mary (Official Audio)",
+  "Mood": "Dark, Mysterious, Haunting",
+  "Instruments": "Synthesizers, Percussion, Bass, Vocal Harmonies",
+  "Genre": "Electropop, Dark Pop"
+}
+🔍 Processing: Lady Gaga - Disease (Official Music Video)
+content: {
+  "song_name": "Lady Gaga - Disease (Official Music Video)",
+  "Mood": "N/A",
+  "Instruments": "N/A",
+  "Genre": "N/A"
+}
+🔍 Processing: Lady Gaga - Judas (Official Music Video)
+content: {
+  "song_name": "Lady Gaga - Judas (Official Music Video)",
+  "Mood": "Dramatic, Energetic, Dark",
+  "Instruments": "Synthesizers, Drum Machines, Electric Guitar, Vocal Effects",
+  "Genre": "Electropop, Dance-pop"
+}
+🔍 Processing: Lady Gaga - Poker Face (Official Music Video)
+content: {
+  "song_name": "Lady Gaga - Poker Face (Official Music Video)",
+  "Mood": "Playful, Confident, Mysterious",
+  "Instruments": "Synthesizer, Drum Machine, Electronic Beats, Vocals",
+  "Genre": "Electropop, Dance-Pop"
+}
+🔍 Processing: Lady Gaga, Bruno Mars - Die With A Smile (Official Music Video)
+content: {
+  "song_name": "Lady Gaga, Bruno Mars - Die With A Smile (Official Music Video)",
+  "Mood": "Uplifting and emotional",
+  "Instruments": "Piano, guitar, drums, synthesizers, and orchestral elements",
+  "Genre": "Pop with soul and electronic influences"
+}
+🔍 Processing: Queen - Another One Bites the Dust (Official Video)
+content: {
+  "song_name": "Queen - Another One Bites the Dust (Official Video)",
+  "Mood": "Energetic",
+  "Instruments": "Bass guitar, Electric guitar, Drums, Piano, Synthesizer, Vocals",
+  "Genre": "Funk Rock"
+}
+🔍 Processing: Queen - Crazy Little Thing Called Love (Official Video)
+content: {
+  "song_name": "Queen - Crazy Little Thing Called Love (Official Video)",
+  "Mood": "Playful, Energetic",
+  "Instruments": "Guitar, Bass, Drums, Piano, Vocals",
+  "Genre": "Rockabilly, Rock"
+}
+🔍 Processing: Queen - Don't Stop Me Now (Official Video)
+content: {
+  "song_name": "Queen - Don't Stop Me Now (Official Video)",
+  "Mood": "Energetic, Uplifting",
+  "Instruments": "Piano, Electric Guitar, Bass Guitar, Drums, Vocals",
+  "Genre": "Rock"
+}
+🔍 Processing: Queen - Fat Bottomed Girls (Official Video)
+content: {
+  "song_name": "Queen - Fat Bottomed Girls (Official Video)",
+  "Mood": "Energetic",
+  "Instruments": "Electric guitar, Bass guitar, Drums, Vocals",
+  "Genre": "Rock"
+}
+🔍 Processing: Queen - Killer Queen (Top Of The Pops, 1974)
+content: {
+  "song_name": "Queen - Killer Queen (Top Of The Pops, 1974)",
+  "Mood": "Sophisticated, Playful",
+  "Instruments": "Piano, Guitar, Bass, Drums, Vocals",
+  "Genre": "Glam Rock, Art Rock"
+}
+🔍 Processing: Queen - Save Me (Official Video)
+content: {
+  "song_name": "Queen - Save Me (Official Video)",
+  "Mood": "Melancholic, Reflective, Emotional",
+  "Instruments": "Piano, Electric Guitar, Bass Guitar, Drums, Vocals",
+  "Genre": "Rock, Ballad"
+}
+🔍 Processing: Queen - Somebody To Love (Official Video)
+content: {
+  "song_name": "Queen - Somebody To Love (Official Video)",
+  "Mood": "Soulful, Emotional, Uplifting",
+  "Instruments": "Vocals, Piano, Guitar, Bass, Drums",
+  "Genre": "Rock, Gospel-inspired"
+}
+🔍 Processing: Queen - The Show Must Go On (Official Video)
+content: {
+  "song_name": "Queen - The Show Must Go On (Official Video)",
+  "Mood": "Resilient, Emotional, Powerful",
+  "Instruments": "Electric guitar, Synthesizer, Bass guitar, Drums, Piano, Vocals",
+  "Genre": "Rock, Symphonic Rock"
+}
+🔍 Processing: Queen - You're My Best Friend (Official Video)
+content: {
+  "song_name": "Queen - You're My Best Friend (Official Video)",
+  "Mood": "Warm, Joyful, Heartfelt",
+  "Instruments": "Electric Piano, Bass Guitar, Electric Guitar, Drums, Vocals",
+  "Genre": "Rock, Pop Rock"
+}
+🔍 Processing: Queen – Bohemian Rhapsody (Official Video Remastered)
+content: {
+  "song_name": "Queen – Bohemian Rhapsody (Official Video Remastered)",
+  "Mood": "dramatic, emotional, theatrical",
+  "Instruments": "piano, guitar, bass, drums, vocals",
+  "Genre": "progressive rock, opera rock"
+}
+🔍 Processing: The Beatles - And I Love Her (Remastered 2009)
+content: {
+  "song_name": "The Beatles - And I Love Her (Remastered 2009)",
+  "Mood": "Romantic",
+  "Instruments": "Acoustic guitar, bass, claves, bongos",
+  "Genre": "Pop, Ballad"
 }
 """
 
@@ -326,9 +376,9 @@ def extract_metadata_from_text(text):
             data = json.loads(json_str)
             title = data["song_name"].strip()
             entries[title] = {
-                "mood": data["mood"],
-                "instruments": data["instruments"],
-                "genre": data["genre"]
+                "mood": data["Mood"],
+                "instruments": data["Instruments"],
+                "genre": data["Genre"]
             }
         except json.JSONDecodeError:
             continue
@@ -370,4 +420,4 @@ def update_csv_with_text(input_csv, output_csv, text):
 
 # Run the function
 if __name__ == "__main__":
-    update_csv_with_text('/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_201.csv', '/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_filled.csv', text)
+    update_csv_with_text('/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_filled.csv', '/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_filled1.csv', text)
