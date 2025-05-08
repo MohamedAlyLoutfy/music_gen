@@ -38,7 +38,7 @@ Only respond with the JSON.
 """
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # or "gpt-4o" if available
+            model="gpt-4o",  # or "gpt-4o" if available
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )
