@@ -18,7 +18,7 @@ def wav_to_mel(wav_path, sr=44100, n_fft=2048, hop_length=512, n_mels=256):
 
 def process_dataset(root_dir, output_dir, allowed_stems=None):
     if allowed_stems is None:
-        allowed_stems = ['vocals', 'non_vocals', 'bass', 'drums', 'other']
+        allowed_stems = ['vocals', 'no_vocals', 'bass', 'drums', 'other']
 
     os.makedirs(output_dir, exist_ok=True)
     song_dirs = [d for d in os.listdir(root_dir) if os.path.isdir(os.path.join(root_dir, d))]
@@ -43,8 +43,8 @@ def process_dataset(root_dir, output_dir, allowed_stems=None):
 
 def main():
     # 🔧 EDIT THESE PATHS
-    root_dir = "/path/to/data"
-    output_dir = "/path/to/output"
+    root_dir = "/media/selim/New Volume1/MusicGen"
+    output_dir = "/media/selim/New Volume1/MusicGen_mels"
 
     process_dataset(root_dir, output_dir)
 
