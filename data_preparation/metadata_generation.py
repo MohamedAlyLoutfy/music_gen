@@ -120,4 +120,5 @@ def update_csv_with_metadata(input_csv_path, output_csv_path):
 
 # Example usage
 if __name__ == "__main__":
-    update_csv_with_metadata('/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_201.csv', '/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_complete.csv')
+    update_csv_with_metadata('/selim/separated_old/htdemucs/musical_analysis_201.csv',
+                             '/selim/separated_old/htdemucs/musical_analysis_complete.csv')

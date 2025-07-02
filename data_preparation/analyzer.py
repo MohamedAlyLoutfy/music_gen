@@ -36,6 +36,7 @@ for folder in folders:
             "Key": key,
             "Instruments": "",  # Fill manually later
             "Mood": "",  # Fill manually later
+            "Genre": "",
             "Loop files": ""  # Fill manually later
         })
 

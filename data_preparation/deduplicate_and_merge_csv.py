@@ -35,4 +35,5 @@ def deduplicate_csv(input_path, output_path):
 
 # Example usage
 if __name__ == "__main__":
-    deduplicate_csv("/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_complete.csv", "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs/musical_analysis_complete1.csv")
+    deduplicate_csv("/selim/separated_old/htdemucs/musical_analysis_complete.csv",
+                    "/selim/separated_old/htdemucs/musical_analysis_complete1.csv")

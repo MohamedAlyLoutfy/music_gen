@@ -3,10 +3,10 @@ import shutil
 import subprocess
 
 # Path to the main folder containing song folders
-main_folder = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/htdemucs"
+main_folder = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/data_preparation/separated/htdemucs"
 
 # Optional: output folder for separated stems
-output_folder = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/selim/separated/instruments"
+output_folder = "/home/selim/Documents/test_musicgen/split"
 # Temporary base output where Demucs writes
 temp_folder = os.path.join(output_folder, "temp_demucs_outputs")
 

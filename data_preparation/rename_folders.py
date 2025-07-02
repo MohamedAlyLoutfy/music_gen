@@ -7,7 +7,7 @@ input_folder = r"/home/selim/Documents/Uni Stuttgart/DeepLearningLab/MusicGen/se
 folders = sorted(os.listdir(input_folder))
 
 # Start song numbering from 201
-song_number = 201
+song_number = 311
 
 # Rename each folder
 for folder in folders:

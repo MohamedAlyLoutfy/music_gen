@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# The following settings characterize the job requirements.
+# Note that all these options may also be passed to sbatch (and srun) as command line arguments.
+# Further documentation for these and many more arguments can be found at https://slurm.schedmd.com/sbatch.html
+#
+# Name of the partition the job will be submitted to. Currently there are 'slowlane' and 'fastlane'.
+# Default: 'slowlane'
+#SBATCH --partition=slowlane
+#
+# Number of tasks SLURM expects the script to spawn on each node.
+#SBATCH --ntasks=4
+#
+# Number of CPU cores to assign per task.
+# Default: 1
+#SBATCH --cpus-per-task=2
+# In practice, ntasks and cpus-per-task multiplied impose a 'minimum available CPU threads' requirement.
+#
+# Number of nodes the job needs.
+# Default: 1
+#SBATCH --nodes=1
+#
+# Amount of memory required per node.
+#SBATCH --mem=10G
+# Alternative (do not use both!): Amount of memory required per core.
+##SBATCH --mem-per-cpu=2500M
+# (Also note that SBATCH options can be commented out by having TWO # symbols in front.)
+#
+# Type and amount of GPUs per node.
+# Syntax:     Type:Amount
+#SBATCH --gpus=A40:2
+# Alternatives: gpus-per-node, gpus-per-task
+#
+# Name(s) of node(s) to execute the script on, comma separated. Slurm will allocate all the nodes from this list plus additional ones if needed.
+#SBATCH --nodelist=aisa-gpuB03
+#
+# Maximum run time. Jobs will be stopped if they do not finish in time.
+# Default: Partition dependent, see user documentation
+# Syntax:      d-hh:mm:ss
+#SBATCH --time=0-00:05:00
+#
+# Output text file STDOUT is redirected to. %j will be replaced with SLURM job number, %u with username.
+#SBATCH --output=%u_job_%j.out
+#
+# Job name. Can be useful to make it easier to find your job in the queue.
+# Default: Script name
+#SBATCH --job-name=hello-world
+#
+# Email configuration for notifications from Slurm
+#SBATCH --mail-user=<your@email.com>
+#SBATCH --mail-type=END,FAIL
+
+echo "Hello World"
+sleep 10
+date >> ${SCRATCH_DIR}/temp_file
+mv ${SCRATCH_DIR}/temp_file ~/last_run
+echo "I left something in your home directory."
+
+# IMPORTANT: SBATCH options which follow the first non-comment, non-empty line of code are ignored.
+# Following restriction, although syntactically correct, will therefore not take effect.
+# Earliest begin time. Multiple forms are allowed, especially relative to submission time or absolute time.
+# Syntax:       now+wait_time (unit defaults to seconds if unspecified)
+#SBATCH --begin=now+1hour

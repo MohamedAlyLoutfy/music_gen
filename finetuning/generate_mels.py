@@ -43,8 +43,8 @@ def process_dataset(root_dir, output_dir, allowed_stems=None):
 
 def main():
     # 🔧 EDIT THESE PATHS
-    root_dir = "/media/selim/New Volume1/MusicGen"
-    output_dir = "/media/selim/New Volume1/MusicGen_mels"
+    root_dir = "/media/selim/New Volume/MusicGen"
+    output_dir = "/media/selim/New Volume/MusicGen_mels"
 
     process_dataset(root_dir, output_dir)
 
