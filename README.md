@@ -64,7 +64,17 @@ This folder contains a cloned and modified version of the [AudioCraft](https://g
 > Make sure to follow AudioCraft’s [installation instructions](https://github.com/facebookresearch/audiocraft#installation), and then replace or integrate your files with this folder.
 
 ---
+## 🛠️ Finetuning AudioLDM
 
+### 📂 `audio_ldm_fine_tune/`
+
+This folder contains a cloned and modified version of the [AudioLDM](https://github.com/haoheliu/AudioLDM-training-finetuning) repository, adapted for our custom training pipeline.
+
+#### 🔧 Key Features:
+
+* Added multi conditioning
+
+---
 ## 🧵 SLURM Scripts
 
 ### 📂 `SLURM/`
@@ -81,14 +91,55 @@ Contains SLURM batch job scripts used for launching training and inference on co
 
 #### 🔎 `slurm_text_musicgen`
 
-* MusicGen Finetunning script.
+* AudioLDM Finetunning script.
 
+#### 🔎 `slurm_audio_ldm`
 
+* AudioLDM Finetunning script.
+#### 🔎 `slurm_inference_ldm`
+
+* AudioLDM Finetunning script.
 Make sure to adjust paths, job names, and resource allocations as needed for your cluster.
 
 ---
 
 ## 🧪 Testing
+# 🎧 Frechet Audio Distance (FAD) Evaluation
+
+This project evaluates the similarity between two sets of audio files using **Frechet Audio Distance (FAD)** with the **VGGish model**.
+
+FAD is commonly used to measure the quality of generated audio against a reference dataset (e.g., ground truth). A **lower FAD score indicates better quality** and higher similarity to the reference.
+
+---
+
+## 📦 Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/gudgud96/frechet-audio-distance.git
+cd frechet-audio-distance
+```
+## 🐍 Step 2: Set Up Python Environment
+Make sure you are using Python 3.8–3.10. Then install the required dependencies:
+```bash
+pip install -r requirements.txt
+```
+## 📁 Step 3: Prepare Your Audio Data
+
+#### Organize your .wav files in the following structure:
+
+path/to/project/
+├── target/
+│   └── target1.wav
+├── pre_trained/
+    └── generated1.wav
+
+    The target/ folder contains reference audio.
+
+    The pre_trained/ folder contains generated audio for evaluation.
+## 🧠 Step 4: Run FAD Evaluation
+```
+python fad_testing.py
+```
 
 ### 📁 `testing/CLAP/clap_testing.py`
 
