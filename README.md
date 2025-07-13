@@ -4,6 +4,7 @@ This repository contains tools and scripts to prepare, analyze, and preprocess m
 
 * `data_preparation`: Prepares datasets for training.
 * `finetuning_audiocraft`: Fine-tunes the [AudioCraft](https://github.com/facebookresearch/audiocraft) model.
+* `finetuning_audio_ldm`: Fine-tunes the [AudioLDM](https://github.com/haoheliu/AudioLDM-training-finetuning) model.
 * `SLURM`: SLURM batch jobs for training and inference.
 * `testing`: Evaluation tools for generated outputs.
 
@@ -22,16 +23,20 @@ MusicGeneration/
 │   ├── generate_mels.py
 │   ├── metadata_adder.py
 │   ├── metadata_generation.py
-│   ├── resample.py
+│   └── resample.py
 ├── finetuning_audiocraft/
 │   └── (Modified AudioCraft repo and custom scripts)
+├── finetuning_audio_ldm/
+│   └── (Modified AudioLDM repo and custom scripts)
 ├── SLURM/
 │   ├── slurm_inference_musicgen
 │   ├── slurm_inference_pretrained
 │   └── slurm_musicgen_text
 ├── testing/
-│   └── CLAP/
-│       └── clap_testing.py
+│   ├── CLAP/
+│   ├────── clap_testing.py
+│   ├── FAD/
+│   └────── fad_testing.py
 └── README.md
 ```
 
