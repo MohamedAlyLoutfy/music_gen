@@ -1,0 +1,85 @@
+#!/bin/bash
+
+#SBATCH --partition=slowlane
+#SBATCH --gpus=A40:1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=60G
+#SBATCH --time=0-12:00:00
+#SBATCH --output=%u_vocal2music_%j.out
+#SBATCH --job-name=vocal2music-finetune
+#SBATCH --mail-user=selimelbindary@gmail.com
+#SBATCH --mail-type=END,FAIL
+
+# === 1. Load Conda environment ===
+module purge
+module load Miniconda3
+source ${EBROOTMINICONDA3}/bin/activate
+conda activate musicgen
+
+# === 2. Prepare dataset ===
+cd "$SCRATCH_DIR"
+# echo "📦 Copying dataset..."
+# rsync -u /mnt/beegfs/home/gs113316/musicgen_raw_format.zip .
+
+# echo "🧹 Removing existing unzipped folder if it exists..."
+# rm -rf musicgen_raw_format
+
+# echo "📂 Unzipping dataset (disabling zip bomb detection)..."
+# UNZIP_DISABLE_ZIPBOMB_DETECTION=TRUE unzip -q musicgen_raw_format.zip
+
+echo "📁 Copying audiocraft repo to scratch..."
+rm -rf $SCRATCH_DIR/audiocraft
+cp -r /mnt/beegfs/home/gs113316/audiocraft $SCRATCH_DIR/
+
+echo "📦 Copying dataset into egs/..."
+mkdir -p $SCRATCH_DIR/audiocraft/egs
+rsync -u /mnt/beegfs/home/gs113316/datasets/musicgen_2/musicgen_raw_categories.zip $SCRATCH_DIR/audiocraft/egs/
+
+echo "🧹 Removing any existing unzipped dataset..."
+rm -rf $SCRATCH_DIR/audiocraft/egs/musicgen_raw_categories
+
+echo "📂 Unzipping dataset into egs/..."
+cd $SCRATCH_DIR/audiocraft/egs
+UNZIP_DISABLE_ZIPBOMB_DETECTION=TRUE unzip -q musicgen_raw_categories.zip
+
+# echo "📛 Renaming folder..."
+# mv musicgen_raw_categories_self musicgen_raw_categories
+
+echo "🎯 Copying fine-tuned checkpoint..."
+rm -rf $SCRATCH_DIR/checkpoints
+
+rm -rf $SCRATCH_DIR/outputs/
+
+
+mkdir -p $SCRATCH_DIR/checkpoints
+# cp /mnt/beegfs/home/gs113316/experiments/audiocraft/finetuning_full_text_genre3/xps/cc3a95c6/checkpoint_13.th $SCRATCH_DIR/checkpoints/
+cp /mnt/beegfs/home/gs113316/experiments/audiocraft/finetuning_full_text_genre4/xps/12233d6d/checkpoint_13.th $SCRATCH_DIR/checkpoints/
+
+
+# === 3. Launch training with Dora ===
+cd $SCRATCH_DIR/audiocraft
+
+
+
+echo "🚀 Launching Dora training..."
+dora run solver=musicgen/musicgen_melody_32khz \
+  dset=audio/vocal2music \
+  +trainer.batch_size=2 \
+  +trainer.save_folder=/mnt/beegfs/home/gs113316/experiments/audiocraft/outputs/finetuning_full_text_genre5 \
+  generate.every=10 \
+  model/lm/model_scale=medium \
+  continue_from=$SCRATCH_DIR/checkpoints/checkpoint_13.th \
+  > /mnt/beegfs/home/gs113316/selim/vocal2music_text_training.log 2>&1
+
+
+
+# === 4. Sync outputs to BeeGFS ===
+if [ -d "$SCRATCH_DIR/outputs" ]; then
+  echo "✅ Syncing training outputs..."
+  mkdir -p /mnt/beegfs/home/gs113316/experiments/audiocraft/finetuning_full_text_genre5
+  rsync -av "$SCRATCH_DIR/outputs/" /mnt/beegfs/home/gs113316/experiments/audiocraft/finetuning_full_text_genre5/
+else
+  echo "⚠️ No outputs found — training may have failed or crashed."
+fi

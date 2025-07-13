@@ -1,0 +1,52 @@
+# defaults:
+#   - musicgen/default
+#   - /model: lm/musicgen_lm
+#   - /dset: vocal_tokens
+#   - /conditioner: none
+#   - _self_
+
+# # Place this AFTER _self_ so it's not overridden
+# channels: 1
+# sample_rate: 32000
+
+# optim:
+#   lr: 2e-5
+#   batch_size: 4
+#   updates_per_epoch: 2000
+
+# generate:
+#   lm:
+#     gen_duration: 60
+#     use_sampling: true
+
+defaults:
+  # - musicgen/default                     # Inherits base MusicGen config
+  - /model: lm/musicgen_lm              # Uses MusicGen language model
+  - /dset: vocal_tokens                 # Custom dataset for vocal conditioning
+  # - /conditioner: audio                 # Use raw audio as conditioning input
+  # - override /solver/musicgen/evaluation: none
+  - _self_
+
+# === AUDIO SETTINGS ===
+sample_rate: 32000
+channels: 1
+
+# === OPTIMIZATION ===
+optim:
+  lr: 2e-5
+  batch_size: 4
+  updates_per_epoch: 2000
+  epochs: 10
+
+# === CONDITIONING ===
+conditioner:
+  audio:
+    name: raw_audio
+    sample_rate: 32000
+    channels: 1
+
+# === GENERATION SETTINGS ===
+generate:
+  lm:
+    gen_duration: 60        # Generate 60-second samples
+    use_sampling: true      # Enable sampling for variety

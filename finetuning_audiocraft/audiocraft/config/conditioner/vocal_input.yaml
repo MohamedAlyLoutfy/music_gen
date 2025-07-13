@@ -1,0 +1,3 @@
+_target_: audiocraft.modules.conditioners.VocalConditioner
+path: ${datasource.train}/musicgen_tokens.pt
+sr: 32000
