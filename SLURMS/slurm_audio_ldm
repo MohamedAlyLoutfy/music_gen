@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#SBATCH --partition=slowlane           # Partition to use
+#SBATCH --gpus=A40:1                   # Request one A40 GPU
+#SBATCH --nodes=1                      # One node
+#SBATCH --ntasks=1                     # One task
+#SBATCH --cpus-per-task=8              # 8 CPU cores per task
+#SBATCH --mem=60G                      # 60 GB of RAM
+#SBATCH --time=0-12:00:00              # Max time: 12 hours
+#SBATCH --output=%u_musicgen_%j.out    # SLURM output file
+#SBATCH --job-name=musicgen-finetune   # Job name
+#SBATCH --mail-user=mohamedloutfy97@gmail.com
+#SBATCH --mail-type=END,FAIL           # Email on completion or failure
+
+# === 1. Load Environment ===
+module purge
+module load Miniconda3
+source ${EBROOTMINICONDA3}/bin/activate
+conda activate audio_ldm
+
+# === 2. Set up working directory ===
+cd "$SCRATCH_DIR"
+
+echo "📁 Copying AudioLDM repo to scratch..."
+rm -rf $SCRATCH_DIR/AudioLDM-training-finetuning
+cp -r /mnt/beegfs/home/gs113316/mohamed/AudioLDM-training-finetuning $SCRATCH_DIR/
+
+# Move to the scratch directory where the repo is copied
+cd $SCRATCH_DIR/AudioLDM-training-finetuning
+# === 5. Start Fine-Tuning ===
+echo "🚀 Starting fine-tuning of AudioLDM..."
+export WANDB_MODE=disabled
+python3 audioldm_train/train/latent_diffusion.py \
+    -c audioldm_train/config/2023_08_23_reproduce_audioldm/audioldm_original.yaml \
+    --reload_from_ckpt data/checkpoints/audioldm-s-full.ckpt \
+    > /mnt/beegfs/home/gs113316/mohamed/fine_tune_output.log 2>&1
+echo "✅ Training complete!" >> /mnt/beegfs/home/gs113316/mohamed/fine_tune_output.log
+
+cp -r $SCRATCH_DIR/AudioLDM-training-finetuning/log/latent_diffusion/2023_08_23_reproduce_audioldm/audioldm_original/checkpoints/ /mnt/beegfs/home/gs113316/mohamed/
+echo "✅ Checkpoints copied successfully!" >> /mnt/beegfs/home/gs113316/mohamed/fine_tune_output.log

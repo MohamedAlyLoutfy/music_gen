@@ -1,0 +1,39 @@
+#!/bin/bash
+#SBATCH --partition=slowlane
+#SBATCH --gpus=A40:1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32G
+#SBATCH --time=0-01:00:00
+#SBATCH --output=%u_infer_%j.out
+#SBATCH --job-name=audioldm-infer
+
+module purge
+module load Miniconda3
+source ${EBROOTMINICONDA3}/bin/activate
+conda activate audio_ldm
+
+cd "$SCRATCH_DIR"
+
+echo "📁 Copying AudioLDM repo to scratch..."
+rm -rf $SCRATCH_DIR/AudioLDM-training-finetuning
+cp -r /mnt/beegfs/home/gs113316/mohamed/AudioLDM-training-finetuning $SCRATCH_DIR/
+
+# Move to the scratch directory where the repo is copied
+cd $SCRATCH_DIR/AudioLDM-training-finetuning
+
+python3 audioldm_train/infer.py \
+  --config_yaml audioldm_train/config/2023_08_23_reproduce_audioldm/audioldm_original.yaml \
+  --reload_from_ckpt audioldm_train/checkpoints/checkpoint-fad-133.00-global_step=9999.ckpt \
+  --list_inference my_infer_list.lst \
+    > /mnt/beegfs/home/gs113316/mohamed/infere_output.log 2>&1
+echo "✅ Training complete!" >> /mnt/beegfs/home/gs113316/mohamed/fine_tune_output.log
+
+# Define the inference output directory inside scratch
+INFER_DIR="$SCRATCH_DIR/AudioLDM-training-finetuning/log/latent_diffusion/2023_08_23_reproduce_audioldm/audioldm_original"
+
+# Copy the whole inference folder back to your home directory
+cp -r "$INFER_DIR" /mnt/beegfs/home/gs113316/mohamed/inference_results/
+
+echo "✅ Inference results copied to home directory!" >> /mnt/beegfs/home/gs113316/mohamed/fine_tune_output.log
