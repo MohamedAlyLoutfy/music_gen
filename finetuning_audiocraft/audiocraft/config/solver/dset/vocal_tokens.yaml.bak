@@ -1,0 +1,7 @@
+train:
+  manifest: placeholder.pt
+  num_samples: 721
+
+valid:
+  manifest: placeholder.pt
+  num_samples: 93

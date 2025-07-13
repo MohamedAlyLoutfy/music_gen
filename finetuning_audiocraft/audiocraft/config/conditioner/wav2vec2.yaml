@@ -1,0 +1,43 @@
+# @package __global__
+
+classifier_free_guidance:
+  training_dropout: 0.2
+  inference_coef: 3.0
+
+attribute_dropout:
+  args:
+    active_on_eval: false
+  text: {}
+  wav:
+    self_wav: 0.5  # 50% of training steps will drop melody conditioning (for CFG)
+
+fuser:
+  cross_attention_pos_emb: false
+  cross_attention_pos_emb_scale: 1
+  sum: []
+  prepend: [self_wav, description]
+  cross: []
+  input_interpolate: []
+
+conditioners:
+  self_wav:
+    model: wav2vec2
+    wav2vec2:
+      model_name: facebook/wav2vec2-base-960h  # HF pre-trained model
+      sample_rate: 16000                       # Required input sample rate for Wav2Vec2
+      match_len_on_eval: false                 # Optional: match training embedding length at eval
+      eval_wavs: null                          # Optional: path to fixed eval melody tracks
+      n_eval_wavs: 100                         # How many eval wavs to sample if eval_wavs is set
+  description:
+    model: t5
+    t5:
+      name: t5-base
+      finetune: false
+      word_dropout: 0.2
+      normalize_text: false
+
+dataset:
+  train:
+    merge_text_p: 0.25
+    drop_desc_p: 0.5
+    drop_other_p: 0.5

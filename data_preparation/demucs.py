@@ -2,7 +2,7 @@ import os
 import subprocess
 
 # Set your input folder path
-input_folder = r"/home/selim/Documents/test_musicgen"  # <-- Change this to your folder path
+input_folder = r"/home/selim/Documents/Uni Stuttgart/DeepLearningLab/full_test_resampled/test"  # <-- Change this to your folder path
 
 # Set of valid audio file extensions
 valid_audio_extensions = {'.mp3', '.wav', '.flac', '.ogg', '.m4a'}

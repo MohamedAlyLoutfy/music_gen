@@ -1,0 +1,72 @@
+# defaults:
+#   # - musicgen/default
+#   - /model: lm/musicgen_lm
+#   - /dset: vocal_tokens
+#   - /conditioner: audio
+#   - _self_
+
+# channels: 1
+# sample_rate: 32000
+# compression_model_checkpoint: //pretrained/facebook/encodec_32khz
+
+# optim:
+#   lr: 2e-5
+#   batch_size: 4
+#   updates_per_epoch: 2000
+
+# generate:
+#   lm:
+#     gen_duration: 60
+#     use_sampling: true
+
+# datasource:
+#   train:
+#     manifest: ???
+#     num_samples: ???
+#   valid:
+#     manifest: ???
+#     num_samples: ???
+#   evaluate:
+#     manifest: ${datasource.valid.manifest}  # or point to dummy/empty file
+#     num_samples: ${datasource.valid.num_samples}
+
+defaults:
+  - model@solver.model: none
+  - override /model: lm/musicgen_lm
+  - override /conditioner: audio
+  - override /dset: vocal_tokens
+  - override /solver/musicgen/evaluation: none
+  - _self_
+
+# === General Audio Settings ===
+sample_rate: 32000
+channels: 1
+
+# === Training Optimizer ===
+optim:
+  lr: 2e-5
+  batch_size: 4
+  updates_per_epoch: 2000
+  epochs: 10
+  optimizer: adamw
+  max_norm: 1.0
+  adam:
+    betas: [0.9, 0.95]
+    weight_decay: 0.1
+    eps: 1e-8
+
+# === Audio Conditioning ===
+conditioner:
+  audio:
+    name: raw_audio
+    sample_rate: 32000
+    channels: 1
+
+# === Generation Settings (optional but useful for inference later) ===
+generate:
+  lm:
+    gen_duration: 60
+    use_sampling: true
+    temp: 1.0
+    top_k: 0
+    top_p: 0.0

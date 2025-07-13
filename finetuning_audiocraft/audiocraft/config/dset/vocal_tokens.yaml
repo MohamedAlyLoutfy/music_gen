@@ -1,0 +1,58 @@
+# train:
+#   manifest: ${dset.train.manifest}
+#   num_samples: ${dset.train.num_samples}
+
+# valid:
+#   manifest: ${dset.valid.manifest}
+#   num_samples: ${dset.valid.num_samples}
+
+# datasource:
+#   max_sample_rate: 32000
+#   max_channels: 1
+#   train:
+#     manifest: ${dset.train.manifest}
+#   valid:
+#     manifest: ${dset.valid.manifest}
+#   evaluate: {}
+
+_target_: audiocraft.data.audio_dataset.SplitDatasetConfig
+
+train:
+  _target_: audiocraft.data.audio_dataset.TokenAudioConditionedDataset
+  manifest: ${oc.env:TRAIN_MANIFEST,null}
+  num_samples: ${oc.env:TRAIN_NUM_SAMPLES,0}
+  duration: 30.0
+  sample_rate: 32000
+  channels: 1
+  audio_key: audio_tokens
+  conditioning_audio_key: input_audio
+  tokenizer:
+    _target_: audiocraft.modules.encodec.EncodecTokenizer
+    model: facebook/encodec_32khz
+    sample_rate: 32000
+    channels: 1
+  audio_transform:
+    _target_: audiocraft.data.audio_dataset.IdentityTransform
+  conditioning_audio_transform:
+    _target_: audiocraft.data.audio_dataset.IdentityTransform
+
+valid:
+  _target_: audiocraft.data.audio_dataset.TokenAudioConditionedDataset
+  manifest: ${oc.env:VALID_MANIFEST,null}
+  num_samples: ${oc.env:VALID_NUM_SAMPLES,0}
+  duration: 30.0
+  sample_rate: 32000
+  channels: 1
+  audio_key: audio_tokens
+  conditioning_audio_key: input_audio
+  tokenizer:
+    _target_: audiocraft.modules.encodec.EncodecTokenizer
+    model: facebook/encodec_32khz
+    sample_rate: 32000
+    channels: 1
+  audio_transform:
+    _target_: audiocraft.data.audio_dataset.IdentityTransform
+  conditioning_audio_transform:
+    _target_: audiocraft.data.audio_dataset.IdentityTransform
+
+
