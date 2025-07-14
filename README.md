@@ -237,6 +237,12 @@ pip install demucs
 
 ---
 
+## Report
+
+The report pdf is also included in the repo root.
+
+---
+
 ## 👥 Contributors
 
 * Mohamed Youssef
