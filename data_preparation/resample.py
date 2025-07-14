@@ -37,8 +37,8 @@ def main():
     # output_root = "/home/selim/Documents/test_musicgen/split_32"
     # input_root = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/self_audio"
     # output_root = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/self_audio_resampled"
-    input_root = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/full_test"
-    output_root = "/home/selim/Documents/Uni Stuttgart/DeepLearningLab/full_test_resampled"
+    input_root = "/Users/Selim/Documents/UNI_STUTTGART/Semester 4/project_test_audio/pre_sampled"
+    output_root = '/Users/Selim/Documents/UNI_STUTTGART/Semester 4/project_test_audio/sampled'
 
     resample_audio_files(input_root, output_root)
 

@@ -1,0 +1,74 @@
+#!/bin/bash
+
+#SBATCH --partition=slowlane
+#SBATCH --gpus=A40:1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=60G
+#SBATCH --time=0-01:00:00
+#SBATCH --output=%u_musicgen_infer_%j.out
+#SBATCH --job-name=musicgen-infer-batch
+#SBATCH --mail-user=selimelbindary@gmail.com
+#SBATCH --mail-type=END,FAIL
+
+# === 1. Load Conda environment ===
+module purge
+module load Miniconda3
+source ${EBROOTMINICONDA3}/bin/activate
+conda activate musicgen
+
+# === 2. Set up working directory ===
+cd "$SCRATCH_DIR"
+
+echo "📁 Copying audiocraft repo to scratch..."
+rm -rf $SCRATCH_DIR/audiocraft
+cp -r /mnt/beegfs/home/gs113316/audiocraft $SCRATCH_DIR/
+
+echo "📦 Copying test audio..."
+mkdir -p $SCRATCH_DIR/test_data
+cp -r /mnt/beegfs/home/gs113316/test_data/test_final $SCRATCH_DIR/test_data/
+
+echo "🎯 Copying fine-tuned checkpoint..."
+mkdir -p $SCRATCH_DIR/checkpoints
+cp /mnt/beegfs/home/gs113316/experiments/audiocraft/finetuning_full_text_genre4/xps/12233d6d/checkpoint_13.th $SCRATCH_DIR/checkpoints/
+
+rm -rf $SCRATCH_DIR/inference_finetune5
+mkdir -p $SCRATCH_DIR/inference_finetune5
+
+# === 3. Run single Python script call with list input ===
+cd $SCRATCH_DIR/audiocraft
+
+echo "🐍 Running batched inference using list input..."
+
+python audiocraft/generate_pretrained_many.py \
+  --melodies \
+    "$SCRATCH_DIR/test_data/test_final/beyen_habeit/beyen_habeit.wav" \
+    "$SCRATCH_DIR/test_data/test_final/cheerleader/cheerleader.wav" \
+    "$SCRATCH_DIR/test_data/test_final/dancing_with_a_stranger/dancing_with_a_stranger.wav" \
+    "$SCRATCH_DIR/test_data/test_final/fool_for_you/fool_for_you.wav" \
+    "$SCRATCH_DIR/test_data/test_final/hold_back_the_river/hold_back_the_river.wav" \
+    "$SCRATCH_DIR/test_data/test_final/i_aint_worried/i_aint_worried.wav" \
+    "$SCRATCH_DIR/test_data/test_final/in_the_name_of_love/in_the_name_of_love.wav" \
+    "$SCRATCH_DIR/test_data/test_final/new_rules/new_rules.wav" \
+    "$SCRATCH_DIR/test_data/test_final/only_you/only_you.wav" \
+    "$SCRATCH_DIR/test_data/test_final/the_hanging_tree/the_hanging_tree.wav" \
+  --descriptions \
+    "Generate Arabic Pop ballad Music" \
+    "Generate Reggae Music" \
+    "Generate Pop Music" \
+    "Generate Dance/Pop Music" \
+    "Generate Pop/Rock anthem Music" \
+    "Generate Pop/Rock Music" \
+    "Generate Pop Music" \
+    "Generate Pop Music" \
+    "Generate Rock Music" \
+    "Generate Dance Music" \
+  --output_dir "$SCRATCH_DIR/inference_finetune5" \
+  --duration 30 \
+  > /mnt/beegfs/home/gs113316/selim/vocal2music_inference_pre_many.log 2>&1
+
+# === 4. Copy outputs back to BeeGFS ===
+echo "✅ Copying generated audio to BeeGFS..."
+mkdir -p /mnt/beegfs/home/gs113316/experiments/audiocraft/test_final/pretrained/batch_outputs
+rsync -av "$SCRATCH_DIR/inference_finetune5/" /mnt/beegfs/home/gs113316/experiments/audiocraft/test_final/pretrained/batch_outputs/

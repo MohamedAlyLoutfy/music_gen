@@ -88,15 +88,23 @@ Contains SLURM batch job scripts used for launching training and inference on co
 
 #### 🔁 `slurm_inference_musicgen`
 
-* Runs inference using musicgen finetunned checkpoint
+* Runs inference using musicgen finetunned checkpoint.
 
 #### 🔎 `slurm_inference_pretrained`
 
-* Runs inference using pretrained model.
+* Runs inference using pretrained musicgen model.
+
+#### 🔎 `slurm_inference_many`
+
+* Runs inference using finetunned musicgen model on many inputs.
 
 #### 🔎 `slurm_text_musicgen`
 
 * AudioLDM Finetunning script.
+
+#### 🔎 `slurm_inference_pre_many`
+
+* Runs inference using pretrained musicgen model on many inputs.
 
 #### 🔎 `slurm_audio_ldm`
 
